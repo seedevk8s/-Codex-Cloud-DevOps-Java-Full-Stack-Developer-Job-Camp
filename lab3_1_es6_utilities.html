@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3-1: JavaScript ES6+ 실전 활용</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .demo-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .demo-header h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-content {
+            padding: 1.5rem;
+        }
+
+        .code-block {
+            background: #f4f4f4;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .result-box {
+            background: var(--light);
+            border: 1px solid #dee2e6;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .result-box.success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .result-box.error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-success { background: var(--success); }
+        .btn-danger { background: var(--danger); }
+        .btn-warning { background: var(--warning); }
+
+        .input-group {
+            margin: 1rem 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .array-demo {
+            margin: 1rem 0;
+        }
+
+        .array-item {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .console-output {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+
+        .performance-meter {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .performance-bar {
+            background: #e9ecef;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .performance-fill {
+            background: linear-gradient(90deg, var(--success), var(--warning), var(--danger));
+            height: 100%;
+            transition: width 1s ease;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .demo-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .demo-card:nth-child(2) { animation-delay: 0.1s; }
+        .demo-card:nth-child(3) { animation-delay: 0.2s; }
+        .demo-card:nth-child(4) { animation-delay: 0.3s; }
+        .demo-card:nth-child(5) { animation-delay: 0.4s; }
+        .demo-card:nth-child(6) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 JavaScript ES6+ 실전 활용</h1>
+            <p>현대적인 JavaScript 문법과 고급 기법을 마스터하세요!</p>
+        </div>
+
+        <div class="demo-grid">
+            <!-- 배열 고급 메서드 데모 -->
+            <div class="demo-card">
+                <div class="demo-header">
+                    <h3>🎯 배열 고급 메서드</h3>
+                    <p>map, filter, reduce의 실전 활용</p>
+                </div>
+                <div class="demo-content">
+                    <div class="input-group">
+                        <label>숫자 배열 (쉼표로 구분):</label>
+                        <input type="text" id="numberArray" placeholder="1,2,3,4,5,6,7,8,9,10" value="1,2,3,4,5,6,7,8,9,10">
+                    </div>
+                    
+                    <button class="btn" onclick="demoArrayMethods()">배열 메서드 실행</button>
+                    <button class="btn btn-success" onclick="demoChaining()">메서드 체이닝</button>
+                    
+                    <div id="arrayResults" class="result-box"></div>
+                    
+                    <div class="code-block">
+// ES6+ 배열 메서드 예제
+const numbers = [1,2,3,4,5,6,7,8,9,10];
+
+// 조건부 필터링 + 변환 + 집계
+const result = numbers
+  .filter(n => n % 2 === 0)      // 짝수만
+  .map(n => n ** 2)              // 제곱
+  .reduce((sum, n) => sum + n, 0); // 합계
+                    </div>
+                </div>
+            </div>
+
+            <!-- 구조분해 할당 데모 -->
+            <div class="demo-card">
+                <div class="demo-header">
+                    <h3>📦 구조분해 할당</h3>
+                    <p>객체와 배열의 효율적인 데이터 추출</p>
+                </div>
+                <div class="demo-content">
+                    <div class="input-group">
+                        <label>사용자 정보 (JSON):</label>
+                        <textarea id="userJson" rows="5">
+{
+  "name": "김개발",
+  "age": 28,
+  "skills": ["JavaScript", "React", "Node.js"],
+  "address": {
+    "city": "서울",
+    "district": "강남구"
+  },
+  "projects": [
+    {"name": "쇼핑몰", "tech": "React"},
+    {"name": "블로그", "tech": "Vue.js"}
+  ]
+}
+                        </textarea>
+                    </div>
+                    
+                    <button class="btn" onclick="demoDestructuring()">구조분해 실행</button>
+                    <button class="btn btn-warning" onclick="demoAdvancedDestructuring()">고급 패턴</button>
+                    
+                    <div id="destructuringResults" class="result-box"></div>
+                    
+                    <div class="code-block">
+// 구조분해 할당 고급 패턴
+const { name, skills: [mainSkill, ...otherSkills] } = user;
+const { address: { city }, projects: [firstProject] } = user;
+                    </div>
+                </div>
+            </div>
+
+            <!-- Promise와 async/await 데모 -->
+            <div class="demo-card">
+                <div class="demo-header">
+                    <h3>⚡ 비동기 처리</h3>
+                    <p>Promise, async/await, 병렬 처리</p>
+                </div>
+                <div class="demo-content">
+                    <div class="input-group">
+                        <label>API 지연 시간 (ms):</label>
+                        <input type="number" id="delayTime" value="1000" min="100" max="5000">
+                    </div>
+                    
+                    <button class="btn" onclick="demoPromises()">Promise 체인</button>
+                    <button class="btn btn-success" onclick="demoAsyncAwait()">Async/Await</button>
+                    <button class="btn btn-warning" onclick="demoParallel()">병렬 처리</button>
+                    
+                    <div id="asyncResults" class="result-box"></div>
+                    
+                    <div class="performance-meter">
+                        <label>실행 시간:</label>
+                        <div class="performance-bar">
+                            <div id="performanceBar" class="performance-fill" style="width: 0%"></div>
+                        </div>
+                        <span id="performanceText">0ms</span>
+                    </div>
+                    
+                    <div class="code-block">
+// 병렬 비동기 처리
+const results = await Promise.allSettled([
+  fetchUserData(1),
+  fetchUserData(2),
+  fetchUserData(3)
+]);
+                    </div>
+                </div>
+            </div>
+
+            <!-- 클래스와 모듈 데모 -->
+            <div class="demo-card">
+                <div class="demo-header">
+                    <h3>🏗️ 클래스와 상속</h3>
+                    <p>ES6 클래스, 상속, static 메서드</p>
+                </div>
+                <div class="demo-content">
+                    <div class="input-group">
+                        <label>개발자 이름:</label>
+                        <input type="text" id="devName" placeholder="김개발" value="김개발">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>전문 분야:</label>
+                        <input type="text" id="devSpecialty" placeholder="Frontend, Backend, FullStack" value="FullStack">
+                    </div>
+                    
+                    <button class="btn" onclick="demoClasses()">클래스 생성</button>
+                    <button class="btn btn-success" onclick="demoInheritance()">상속 데모</button>
+                    
+                    <div id="classResults" class="result-box"></div>
+                    
+                    <div class="code-block">
+// ES6 클래스와 상속
+class Developer {
+  constructor(name, specialty) {
+    this.name = name;
+    this.specialty = specialty;
+  }
+  
+  static getSkillLevel(years) {
+    return years >= 5 ? 'Senior' : 'Junior';
+  }
+}
+
+class FullStackDeveloper extends Developer {
+  constructor(name) {
+    super(name, 'FullStack');
+    this.skills = ['Frontend', 'Backend'];
+  }
+}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 고급 함수형 프로그래밍 -->
+            <div class="demo-card">
+                <div class="demo-header">
+                    <h3>🧮 함수형 프로그래밍</h3>
+                    <p>고차함수, 커링, 메모이제이션</p>
+                </div>
+                <div class="demo-content">
+                    <div class="input-group">
+                        <label>계산할 숫자:</label>
+                        <input type="number" id="calcNumber" value="10" min="1" max="50">
+                    </div>
+                    
+                    <button class="btn" onclick="demoHigherOrder()">고차함수</button>
+                    <button class="btn btn-success" onclick="demoCurrying()">커링</button>
+                    <button class="btn btn-warning" onclick="demoMemoization()">메모이제이션</button>
+                    
+                    <div id="functionalResults" class="result-box"></div>
+                    
+                    <div class="console-output" id="functionalConsole"></div>
+                    
+                    <div class="code-block">
+// 메모이제이션 패턴
+const memoize = (fn) => {
+  const cache = new Map();
+  return (...args) => {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) return cache.get(key);
+    const result = fn(...args);
+    cache.set(key, result);
+    return result;
+  };
+};
+                    </div>
+                </div>
+            </div>
+
+            <!-- 실시간 데이터 처리 -->
+            <div class="demo-card">
+                <div class="demo-header">
+                    <h3>📊 실시간 데이터 처리</h3>
+                    <p>Observable, Proxy, WeakMap 활용</p>
+                </div>
+                <div class="demo-content">
+                    <button class="btn" onclick="demoProxy()">Proxy 패턴</button>
+                    <button class="btn btn-success" onclick="demoObservable()">Observable</button>
+                    <button class="btn btn-warning" onclick="demoWeakMap()">WeakMap 캐시</button>
+                    
+                    <div id="advancedResults" class="result-box"></div>
+                    
+                    <div class="array-demo" id="proxyDemo"></div>
+                    
+                    <div class="code-block">
+// Proxy를 활용한 반응형 객체
+const createReactive = (obj, callback) => {
+  return new Proxy(obj, {
+    set(target, key, value) {
+      const oldValue = target[key];
+      target[key] = value;
+      callback(key, value, oldValue);
+      return true;
+    }
+  });
+};
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 유틸리티 함수들
+        const log = (message, target = 'console') => {
+            const element = document.getElementById(target);
+            if (element) {
+                element.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${message}</div>`;
+                element.scrollTop = element.scrollHeight;
+            }
+            console.log(message);
+        };
+
+        const clearResults = (id) => {
+            document.getElementById(id).innerHTML = '';
+        };
+
+        const showResult = (id, content, type = '') => {
+            const element = document.getElementById(id);
+            element.className = `result-box ${type}`;
+            element.innerHTML = content;
+        };
+
+        // 1. 배열 고급 메서드 데모
+        function demoArrayMethods() {
+            const input = document.getElementById('numberArray').value;
+            const numbers = input.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+            
+            const results = {
+                original: numbers,
+                doubled: numbers.map(n => n * 2),
+                evens: numbers.filter(n => n % 2 === 0),
+                sum: numbers.reduce((sum, n) => sum + n, 0),
+                max: Math.max(...numbers),
+                average: numbers.reduce((sum, n) => sum + n, 0) / numbers.length
+            };
+            
+            showResult('arrayResults', `
+                <h4>📊 배열 처리 결과</h4>
+                <p><strong>원본:</strong> [${results.original.join(', ')}]</p>
+                <p><strong>2배:</strong> [${results.doubled.join(', ')}]</p>
+                <p><strong>짝수:</strong> [${results.evens.join(', ')}]</p>
+                <p><strong>합계:</strong> ${results.sum}</p>
+                <p><strong>최댓값:</strong> ${results.max}</p>
+                <p><strong>평균:</strong> ${results.average.toFixed(2)}</p>
+            `, 'success');
+        }
+
+        function demoChaining() {
+            const input = document.getElementById('numberArray').value;
+            const numbers = input.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+            
+            // 복잡한 메서드 체이닝 예제
+            const result = numbers
+                .filter(n => n > 3)                    // 3보다 큰 수
+                .map(n => ({ value: n, square: n ** 2 })) // 객체로 변환
+                .filter(obj => obj.square % 2 === 0)    // 제곱이 짝수인 것
+                .reduce((acc, obj) => {                 // 집계
+                    acc.sum += obj.value;
+                    acc.items.push(obj);
+                    return acc;
+                }, { sum: 0, items: [] });
+            
+            showResult('arrayResults', `
+                <h4>🔗 메서드 체이닝 결과</h4>
+                <p><strong>조건:</strong> 3보다 크고, 제곱이 짝수인 수</p>
+                <p><strong>합계:</strong> ${result.sum}</p>
+                <p><strong>처리된 항목:</strong></p>
+                <ul>
+                    ${result.items.map(item => 
+                        `<li>${item.value} → ${item.square}</li>`
+                    ).join('')}
+                </ul>
+            `, 'success');
+        }
+
+        // 2. 구조분해 할당 데모
+        function demoDestructuring() {
+            try {
+                const userJson = document.getElementById('userJson').value;
+                const user = JSON.parse(userJson);
+                
+                // 기본 구조분해
+                const { name, age, skills } = user;
+                const { address: { city, district } } = user;
+                const [firstSkill, secondSkill, ...otherSkills] = skills;
+                
+                showResult('destructuringResults', `
+                    <h4>📦 기본 구조분해 결과</h4>
+                    <p><strong>이름:</strong> ${name}</p>
+                    <p><strong>나이:</strong> ${age}</p>
+                    <p><strong>도시:</strong> ${city}, ${district}</p>
+                    <p><strong>주요 스킬:</strong> ${firstSkill}</p>
+                    <p><strong>보조 스킬:</strong> ${secondSkill}</p>
+                    <p><strong>기타 스킬:</strong> [${otherSkills.join(', ')}]</p>
+                `, 'success');
+            } catch (error) {
+                showResult('destructuringResults', `
+                    <h4>❌ JSON 파싱 오류</h4>
+                    <p>${error.message}</p>
+                `, 'error');
+            }
+        }
+
+        function demoAdvancedDestructuring() {
+            try {
+                const userJson = document.getElementById('userJson').value;
+                const user = JSON.parse(userJson);
+                
+                // 고급 구조분해 패턴
+                const { 
+                    name: userName, 
+                    skills: [mainSkill, ...restSkills], 
+                    projects: [{ name: firstProjectName, tech: firstTech }],
+                    address: { city = '미정', country = '대한민국' } = {}
+                } = user;
+                
+                // 함수 매개변수 구조분해
+                const analyzeUser = ({ name, skills, age }) => ({
+                    isExperienced: age >= 25,
+                    skillCount: skills.length,
+                    profile: `${name}은(는) ${skills.join(', ')}에 능숙합니다.`
+                });
+                
+                const analysis = analyzeUser(user);
+                
+                showResult('destructuringResults', `
+                    <h4>🔧 고급 구조분해 결과</h4>
+                    <p><strong>사용자명:</strong> ${userName}</p>
+                    <p><strong>주 스킬:</strong> ${mainSkill}</p>
+                    <p><strong>기타 스킬:</strong> [${restSkills.join(', ')}]</p>
+                    <p><strong>첫 번째 프로젝트:</strong> ${firstProjectName} (${firstTech})</p>
+                    <p><strong>위치:</strong> ${city}, ${country}</p>
+                    <p><strong>경험 여부:</strong> ${analysis.isExperienced ? '경험자' : '신입'}</p>
+                    <p><strong>프로필:</strong> ${analysis.profile}</p>
+                `, 'success');
+            } catch (error) {
+                showResult('destructuringResults', `
+                    <h4>❌ 처리 오류</h4>
+                    <p>${error.message}</p>
+                `, 'error');
+            }
+        }
+
+        // 3. 비동기 처리 데모
+        const simulateAPI = (data, delay) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (Math.random() > 0.1) { // 90% 성공률
+                        resolve({ status: 'success', data, timestamp: Date.now() });
+                    } else {
+                        reject(new Error('API 호출 실패'));
+                    }
+                }, delay);
+            });
+        };
+
+        function demoPromises() {
+            const delay = parseInt(document.getElementById('delayTime').value);
+            const startTime = Date.now();
+            
+            showResult('asyncResults', '<p>⏳ Promise 체인 실행 중...</p>');
+            
+            simulateAPI('사용자 데이터', delay)
+                .then(result => {
+                    console.log('1단계 완료:', result);
+                    return simulateAPI('프로필 데이터', delay / 2);
+                })
+                .then(result => {
+                    console.log('2단계 완료:', result);
+                    return simulateAPI('설정 데이터', delay / 3);
+                })
+                .then(result => {
+                    const endTime = Date.now();
+                    const duration = endTime - startTime;
+                    
+                    showResult('asyncResults', `
+                        <h4>✅ Promise 체인 완료</h4>
+                        <p><strong>총 실행 시간:</strong> ${duration}ms</p>
+                        <p><strong>마지막 결과:</strong> ${JSON.stringify(result, null, 2)}</p>
+                    `, 'success');
+                    
+                    updatePerformance(duration, delay * 2);
+                })
+                .catch(error => {
+                    showResult('asyncResults', `
+                        <h4>❌ Promise 체인 실패</h4>
+                        <p>${error.message}</p>
+                    `, 'error');
+                });
+        }
+
+        async function demoAsyncAwait() {
+            const delay = parseInt(document.getElementById('delayTime').value);
+            const startTime = Date.now();
+            
+            showResult('asyncResults', '<p>⏳ Async/Await 실행 중...</p>');
+            
+            try {
+                const step1 = await simulateAPI('사용자 데이터', delay);
+                console.log('1단계 완료:', step1);
+                
+                const step2 = await simulateAPI('프로필 데이터', delay / 2);
+                console.log('2단계 완료:', step2);
+                
+                const step3 = await simulateAPI('설정 데이터', delay / 3);
+                console.log('3단계 완료:', step3);
+                
+                const endTime = Date.now();
+                const duration = endTime - startTime;
+                
+                showResult('asyncResults', `
+                    <h4>✅ Async/Await 완료</h4>
+                    <p><strong>총 실행 시간:</strong> ${duration}ms</p>
+                    <p><strong>처리 단계:</strong> 3단계 순차 실행</p>
+                    <p><strong>최종 데이터:</strong> ${step3.data}</p>
+                `, 'success');
+                
+                updatePerformance(duration, delay * 2);
+            } catch (error) {
+                showResult('asyncResults', `
+                    <h4>❌ Async/Await 실패</h4>
+                    <p>${error.message}</p>
+                `, 'error');
+            }
+        }
+
+        async function demoParallel() {
+            const delay = parseInt(document.getElementById('delayTime').value);
+            const startTime = Date.now();
+            
+            showResult('asyncResults', '<p>⏳ 병렬 처리 실행 중...</p>');
+            
+            try {
+                const promises = [
+                    simulateAPI('사용자 1', delay),
+                    simulateAPI('사용자 2', delay),
+                    simulateAPI('사용자 3', delay)
+                ];
+                
+                const results = await Promise.allSettled(promises);
+                const endTime = Date.now();
+                const duration = endTime - startTime;
+                
+                const successful = results.filter(r => r.status === 'fulfilled').length;
+                const failed = results.filter(r => r.status === 'rejected').length;
+                
+                showResult('asyncResults', `
+                    <h4>🚀 병렬 처리 완료</h4>
+                    <p><strong>실행 시간:</strong> ${duration}ms (순차 대비 ${Math.round((delay * 3) / duration * 100)}% 빠름)</p>
+                    <p><strong>성공:</strong> ${successful}개, <strong>실패:</strong> ${failed}개</p>
+                    <p><strong>결과:</strong></p>
+                    <ul>
+                        ${results.map((result, index) => 
+                            `<li>사용자 ${index + 1}: ${result.status === 'fulfilled' ? '✅ 성공' : '❌ 실패'}</li>`
+                        ).join('')}
+                    </ul>
+                `, 'success');
+                
+                updatePerformance(duration, delay);
+            } catch (error) {
+                showResult('asyncResults', `
+                    <h4>❌ 병렬 처리 실패</h4>
+                    <p>${error.message}</p>
+                `, 'error');
+            }
+        }
+
+        function updatePerformance(actual, expected) {
+            const percentage = Math.min((actual / expected) * 100, 100);
+            const bar = document.getElementById('performanceBar');
+            const text = document.getElementById('performanceText');
+            
+            bar.style.width = percentage + '%';
+            text.textContent = `${actual}ms`;
+        }
+
+        // 4. 클래스와 상속 데모
+        class Developer {
+            constructor(name, specialty) {
+                this.name = name;
+                this.specialty = specialty;
+                this.projects = [];
+                this.experience = 0;
+            }
+            
+            addProject(project) {
+                this.projects.push(project);
+                this.experience += 0.5;
+            }
+            
+            getLevel() {
+                if (this.experience >= 5) return 'Senior';
+                if (this.experience >= 2) return 'Mid-level';
+                return 'Junior';
+            }
+            
+            static compareExperience(dev1, dev2) {
+                return dev2.experience - dev1.experience;
+            }
+            
+            toString() {
+                return `${this.name} (${this.specialty}) - ${this.getLevel()}`;
+            }
+        }
+
+        class FullStackDeveloper extends Developer {
+            constructor(name) {
+                super(name, 'FullStack');
+                this.frontendSkills = [];
+                this.backendSkills = [];
+            }
+            
+            addSkill(skill, type = 'frontend') {
+                if (type === 'frontend') {
+                    this.frontendSkills.push(skill);
+                } else {
+                    this.backendSkills.push(skill);
+                }
+            }
+            
+            getSkillSummary() {
+                return {
+                    frontend: this.frontendSkills,
+                    backend: this.backendSkills,
+                    total: this.frontendSkills.length + this.backendSkills.length
+                };
+            }
+        }
+
+        function demoClasses() {
+            const name = document.getElementById('devName').value || '김개발';
+            const specialty = document.getElementById('devSpecialty').value || 'FullStack';
+            
+            const dev = new Developer(name, specialty);
+            dev.addProject('쇼핑몰 프로젝트');
+            dev.addProject('블로그 시스템');
+            dev.addProject('관리자 대시보드');
+            
+            showResult('classResults', `
+                <h4>👩‍💻 개발자 클래스 생성</h4>
+                <p><strong>개발자:</strong> ${dev.toString()}</p>
+                <p><strong>경험치:</strong> ${dev.experience}년</p>
+                <p><strong>레벨:</strong> ${dev.getLevel()}</p>
+                <p><strong>프로젝트:</strong> ${dev.projects.join(', ')}</p>
+            `, 'success');
+        }
+
+        function demoInheritance() {
+            const name = document.getElementById('devName').value || '김개발';
+            
+            const fullStackDev = new FullStackDeveloper(name);
+            fullStackDev.addSkill('React', 'frontend');
+            fullStackDev.addSkill('Vue.js', 'frontend');
+            fullStackDev.addSkill('Node.js', 'backend');
+            fullStackDev.addSkill('Spring Boot', 'backend');
+            fullStackDev.addProject('E-commerce Platform');
+            fullStackDev.addProject('Real-time Chat App');
+            
+            const skills = fullStackDev.getSkillSummary();
+            
+            showResult('classResults', `
+                <h4>🎯 풀스택 개발자 (상속)</h4>
+                <p><strong>개발자:</strong> ${fullStackDev.toString()}</p>
+                <p><strong>프론트엔드 스킬:</strong> ${skills.frontend.join(', ')}</p>
+                <p><strong>백엔드 스킬:</strong> ${skills.backend.join(', ')}</p>
+                <p><strong>총 스킬 수:</strong> ${skills.total}개</p>
+                <p><strong>경험치:</strong> ${fullStackDev.experience}년</p>
+                <p><strong>instanceof 확인:</strong> ${fullStackDev instanceof Developer ? '✅' : '❌'}</p>
+            `, 'success');
+        }
+
+        // 5. 함수형 프로그래밍 데모
+        function demoHigherOrder() {
+            const num = parseInt(document.getElementById('calcNumber').value);
+            clearResults('functionalConsole');
+            
+            // 고차함수 예제
+            const createMultiplier = (factor) => (x) => x * factor;
+            const createValidator = (condition) => (value) => condition(value);
+            
+            const double = createMultiplier(2);
+            const triple = createMultiplier(3);
+            const isEven = createValidator(x => x % 2 === 0);
+            const isPositive = createValidator(x => x > 0);
+            
+            const numbers = Array.from({length: num}, (_, i) => i + 1);
+            const results = numbers.map(n => ({
+                original: n,
+                doubled: double(n),
+                tripled: triple(n),
+                isEven: isEven(n),
+                isPositive: isPositive(n)
+            }));
+            
+            log(`고차함수 실행 결과 (${num}개 항목):`, 'functionalConsole');
+            results.slice(0, 5).forEach(r => {
+                log(`${r.original} → 2배: ${r.doubled}, 3배: ${r.tripled}, 짝수: ${r.isEven}, 양수: ${r.isPositive}`, 'functionalConsole');
+            });
+            
+            showResult('functionalResults', `
+                <h4>🔧 고차함수 실행 완료</h4>
+                <p>createMultiplier와 createValidator 팩토리 함수를 사용하여 ${num}개 숫자를 처리했습니다.</p>
+            `, 'success');
+        }
+
+        function demoCurrying() {
+            const num = parseInt(document.getElementById('calcNumber').value);
+            clearResults('functionalConsole');
+            
+            // 커링 예제
+            const curriedAdd = (a) => (b) => (c) => a + b + c;
+            const curriedMultiply = (a) => (b) => (c) => a * b * c;
+            
+            // 부분 적용
+            const add5 = curriedAdd(5);
+            const add5And3 = add5(3);
+            
+            const multiply2 = curriedMultiply(2);
+            const multiply2And3 = multiply2(3);
+            
+            log('커링 함수 실행:', 'functionalConsole');
+            log(`curriedAdd(5)(3)(${num}) = ${add5And3(num)}`, 'functionalConsole');
+            log(`curriedMultiply(2)(3)(${num}) = ${multiply2And3(num)}`, 'functionalConsole');
+            
+            // 실용적인 커링 예제
+            const fetchData = (method) => (url) => (data) => {
+                return `${method} 요청을 ${url}에 ${JSON.stringify(data)} 데이터로 전송`;
+            };
+            
+            const get = fetchData('GET');
+            const post = fetchData('POST');
+            const getUserData = get('/api/users');
+            const createUser = post('/api/users');
+            
+            log(getUserData({ id: num }), 'functionalConsole');
+            log(createUser({ name: '새 사용자' }), 'functionalConsole');
+            
+            showResult('functionalResults', `
+                <h4>🍛 커링 패턴 완료</h4>
+                <p>함수의 부분 적용을 통해 재사용 가능한 함수들을 생성했습니다.</p>
+            `, 'success');
+        }
+
+        function demoMemoization() {
+            const num = parseInt(document.getElementById('calcNumber').value);
+            clearResults('functionalConsole');
+            
+            // 메모이제이션 구현
+            const memoize = (fn) => {
+                const cache = new Map();
+                return (...args) => {
+                    const key = JSON.stringify(args);
+                    if (cache.has(key)) {
+                        log(`💾 캐시에서 반환: ${key}`, 'functionalConsole');
+                        return cache.get(key);
+                    }
+                    log(`🔄 새로 계산: ${key}`, 'functionalConsole');
+                    const result = fn(...args);
+                    cache.set(key, result);
+                    return result;
+                };
+            };
+            
+            // 피보나치 수열 (비효율적 재귀)
+            const fibonacci = (n) => {
+                if (n <= 1) return n;
+                return fibonacci(n - 1) + fibonacci(n - 2);
+            };
+            
+            const memoizedFibonacci = memoize(fibonacci);
+            
+            const startTime = performance.now();
+            const result1 = memoizedFibonacci(num);
+            const firstTime = performance.now() - startTime;
+            
+            const start2 = performance.now();
+            const result2 = memoizedFibonacci(num); // 캐시에서 반환
+            const secondTime = performance.now() - start2;
+            
+            log(`fibonacci(${num}) = ${result1}`, 'functionalConsole');
+            log(`첫 번째 실행: ${firstTime.toFixed(2)}ms`, 'functionalConsole');
+            log(`두 번째 실행: ${secondTime.toFixed(2)}ms (${Math.round(firstTime / secondTime)}배 빠름)`, 'functionalConsole');
+            
+            showResult('functionalResults', `
+                <h4>🧠 메모이제이션 완료</h4>
+                <p>캐싱을 통해 ${Math.round(firstTime / secondTime)}배의 성능 향상을 달성했습니다.</p>
+            `, 'success');
+        }
+
+        // 6. 고급 기능 데모
+        function demoProxy() {
+            clearResults('proxyDemo');
+            
+            const target = { count: 0, name: 'Counter' };
+            
+            const reactiveProxy = new Proxy(target, {
+                set(obj, key, value) {
+                    const oldValue = obj[key];
+                    obj[key] = value;
+                    
+                    // UI 업데이트
+                    const proxyDemo = document.getElementById('proxyDemo');
+                    proxyDemo.innerHTML += `<div class="array-item">${key}: ${oldValue} → ${value}</div>`;
+                    
+                    console.log(`🔄 Proxy: ${key} 변경됨 (${oldValue} → ${value})`);
+                    return true;
+                },
+                
+                get(obj, key) {
+                    console.log(`👁️ Proxy: ${key} 속성 접근됨`);
+                    return obj[key];
+                }
+            });
+            
+            // 테스트
+            reactiveProxy.count = 1;
+            reactiveProxy.count = 2;
+            reactiveProxy.name = 'Advanced Counter';
+            reactiveProxy.count += 3;
+            
+            showResult('advancedResults', `
+                <h4>🔍 Proxy 패턴 완료</h4>
+                <p>객체의 속성 변경을 실시간으로 감지하고 UI를 업데이트했습니다.</p>
+            `, 'success');
+        }
+
+        function demoObservable() {
+            // 간단한 Observable 구현
+            class SimpleObservable {
+                constructor() {
+                    this.observers = [];
+                }
+                
+                subscribe(callback) {
+                    this.observers.push(callback);
+                    return () => {
+                        this.observers = this.observers.filter(obs => obs !== callback);
+                    };
+                }
+                
+                next(value) {
+                    this.observers.forEach(callback => callback(value));
+                }
+            }
+            
+            const dataStream = new SimpleObservable();
+            const results = [];
+            
+            // 구독자들
+            const unsubscribe1 = dataStream.subscribe(data => {
+                results.push(`Observer 1: ${data}`);
+            });
+            
+            const unsubscribe2 = dataStream.subscribe(data => {
+                results.push(`Observer 2: ${data.toUpperCase()}`);
+            });
+            
+            // 데이터 스트림
+            ['hello', 'world', 'observable', 'pattern'].forEach((word, index) => {
+                setTimeout(() => {
+                    dataStream.next(word);
+                    
+                    if (index === 3) {
+                        showResult('advancedResults', `
+                            <h4>📡 Observable 패턴 완료</h4>
+                            <p>데이터 스트림을 관찰하는 패턴을 구현했습니다:</p>
+                            <ul>
+                                ${results.map(r => `<li>${r}</li>`).join('')}
+                            </ul>
+                        `, 'success');
+                    }
+                }, index * 500);
+            });
+        }
+
+        function demoWeakMap() {
+            // WeakMap 캐시 예제
+            const cache = new WeakMap();
+            
+            class ExpensiveCalculation {
+                constructor(data) {
+                    this.data = data;
+                }
+                
+                process() {
+                    // 무거운 계산 시뮬레이션
+                    return this.data.reduce((acc, val) => acc + val * val, 0);
+                }
+            }
+            
+            const getCachedResult = (obj) => {
+                if (cache.has(obj)) {
+                    console.log('💾 WeakMap 캐시에서 반환');
+                    return cache.get(obj);
+                }
+                
+                console.log('🔄 새로 계산 후 WeakMap에 저장');
+                const result = obj.process();
+                cache.set(obj, result);
+                return result;
+            };
+            
+            // 테스트
+            const calc1 = new ExpensiveCalculation([1, 2, 3, 4, 5]);
+            const calc2 = new ExpensiveCalculation([6, 7, 8, 9, 10]);
+            
+            const result1 = getCachedResult(calc1);
+            const result2 = getCachedResult(calc1); // 캐시에서 반환
+            const result3 = getCachedResult(calc2);
+            
+            showResult('advancedResults', `
+                <h4>🗃️ WeakMap 캐시 완료</h4>
+                <p>객체를 키로 하는 캐싱 시스템을 구현했습니다:</p>
+                <ul>
+                    <li>계산 1: ${result1} (새로 계산)</li>
+                    <li>계산 1 (재실행): ${result2} (캐시에서 반환)</li>
+                    <li>계산 2: ${result3} (새로 계산)</li>
+                </ul>
+                <p>WeakMap은 객체가 가비지 컬렉션될 때 자동으로 캐시도 정리됩니다.</p>
+            `, 'success');
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 JavaScript ES6+ Lab 초기화 완료');
+            
+            // 키보드 단축키
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case '1':
+                            e.preventDefault();
+                            demoArrayMethods();
+                            break;
+                        case '2':
+                            e.preventDefault();
+                            demoDestructuring();
+                            break;
+                        case '3':
+                            e.preventDefault();
+                            demoAsyncAwait();
+                            break;
+                        case '4':
+                            e.preventDefault();
+                            demoClasses();
+                            break;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
