@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1-2: HTML5 폼 요소와 입력 검증</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+        }
+        
+        .form-section {
+            margin-bottom: 3rem;
+        }
+        
+        .form-section h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 기본 폼 스타일 */
+        form {
+            margin-bottom: 2rem;
+        }
+        
+        fieldset {
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        legend {
+            font-weight: bold;
+            color: #2c3e50;
+            padding: 0 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .required::after {
+            content: " *";
+            color: #e74c3c;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        input:valid {
+            border-color: #27ae60;
+        }
+        
+        input:invalid:not(:placeholder-shown) {
+            border-color: #e74c3c;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .checkbox-item input, .radio-item input {
+            width: auto;
+            margin: 0;
+        }
+        
+        .checkbox-item label, .radio-item label {
+            margin: 0;
+            font-weight: normal;
+        }
+        
+        /* 버튼 스타일 */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        button {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* 에러 및 성공 메시지 */
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+        
+        /* 도움말 텍스트 */
+        .help-text {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+        
+        /* 프로그레스 바 */
+        .progress-container {
+            margin-bottom: 2rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e6ed;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+        
+        /* 접근성 개선 */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* 포커스 표시 개선 */
+        input:focus-visible, 
+        textarea:focus-visible, 
+        select:focus-visible, 
+        button:focus-visible {
+            outline: 2px solid #3498db;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lab 1-2: HTML5 폼 요소와 입력 검증</h1>
+        
+        <!-- 진행률 표시 -->
+        <div class="progress-container">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-text">완성도: <span id="progress-percentage">0%</span></div>
+        </div>
+        
+        <!-- 성공 메시지 -->
+        <div id="success-message" class="success-message" role="alert">
+            <strong>성공!</strong> 폼이 성공적으로 제출되었습니다.
+        </div>
+        
+        <!-- 메인 연락처 폼 -->
+        <div class="form-section">
+            <h2>📧 연락처 폼 (HTML5 검증 활용)</h2>
+            <form id="contact-form" novalidate>
+                <!-- 개인 정보 필드셋 -->
+                <fieldset>
+                    <legend>개인 정보</legend>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name" class="required">이름</label>
+                            <input type="text" 
+                                   id="first-name" 
+                                   name="firstName" 
+                                   required 
+                                   minlength="2" 
+                                   maxlength="20"
+                                   placeholder="홍길동"
+                                   autocomplete="given-name"
+                                   aria-describedby="first-name-help first-name-error">
+                            <div id="first-name-help" class="help-text">2-20자 사이로 입력해주세요</div>
+                            <div id="first-name-error" class="error-message" aria-live="polite"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="last-name" class="required">성</label>
+                            <input type="text" 
+                                   id="last-name" 
+                                   name="lastName" 
+                                   required 
+                                   minlength="1" 
+                                   maxlength="10"
+                                   placeholder="김"
+                                   autocomplete="family-name"
+                                   aria-describedby="last-name-error">
+                            <div id="last-name-error" class="error-message" aria-live="polite"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="required">이메일</label>
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               required 
+                               placeholder="example@email.com"
+                               autocomplete="email"
+                               aria-describedby="email-help email-error">
+                        <div id="email-help" class="help-text">유효한 이메일 주소를 입력해주세요</div>
+                        <div id="email-error" class="error-message" aria-live="polite"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">전화번호</label>
+                        <input type="tel" 
+                               id="phone" 
+                               name="phone" 
+                               pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                               placeholder="010-1234-5678"
+                               autocomplete="tel"
+                               aria-describedby="phone-help phone-error">
+                        <div id="phone-help" class="help-text">형식: 010-1234-5678</div>
+                        <div id="phone-error" class="error-message" aria-live="polite"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age">나이</label>
+                        <input type="number" 
+                               id="age" 
+                               name="age" 
+                               min="18" 
+                               max="100" 
+                               step="1"
+                               placeholder="25"
+                               aria-describedby="age-help">
+                        <div id="age-help" class="help-text">18세 이상만 가능합니다</div>
+                    </div>
+                </fieldset>
+                
+                <!-- 문의 내용 필드셋 -->
+                <fieldset>
+                    <legend>문의 내용</legend>
+                    
+                    <div class="form-group">
+                        <label for="inquiry-type" class="required">문의 유형</label>
+                        <select id="inquiry-type" name="inquiryType" required aria-describedby="inquiry-type-error">
+                            <option value="">문의 유형을 선택하세요</option>
+                            <option value="general">일반 문의</option>
+                            <option value="technical">기술 문의</option>
+                            <option value="business">비즈니스 문의</option>
+                            <option value="support">고객 지원</option>
+                        </select>
+                        <div id="inquiry-type-error" class="error-message" aria-live="polite"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" class="required">제목</label>
+                        <input type="text" 
+                               id="subject" 
+                               name="subject" 
+                               required 
+                               minlength="5" 
+                               maxlength="100"
+                               placeholder="문의 제목을 입력하세요"
+                               aria-describedby="subject-help subject-error">
+                        <div id="subject-help" class="help-text">5-100자 사이로 입력해주세요</div>
+                        <div id="subject-error" class="error-message" aria-live="polite"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="required">메시지</label>
+                        <textarea id="message" 
+                                  name="message" 
+                                  required 
+                                  minlength="10" 
+                                  maxlength="1000"
+                                  placeholder="상세한 문의 내용을 입력해주세요..."
+                                  aria-describedby="message-help message-error"></textarea>
+                        <div id="message-help" class="help-text">10-1000자 사이로 입력해주세요 (<span id="char-count">0</span>/1000)</div>
+                        <div id="message-error" class="error-message" aria-live="polite"></div>
+                    </div>
+                </fieldset>
+                
+                <!-- 추가 옵션 필드셋 -->
+                <fieldset>
+                    <legend>추가 옵션</legend>
+                    
+                    <div class="form-group">
+                        <label>선호 연락 방법</label>
+                        <div class="radio-group" role="radiogroup" aria-describedby="contact-method-help">
+                            <div class="radio-item">
+                                <input type="radio" id="contact-email" name="contactMethod" value="email" checked>
+                                <label for="contact-email">이메일</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="contact-phone" name="contactMethod" value="phone">
+                                <label for="contact-phone">전화</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="contact-both" name="contactMethod" value="both">
+                                <label for="contact-both">둘 다</label>
+                            </div>
+                        </div>
+                        <div id="contact-method-help" class="help-text">선호하는 연락 방법을 선택해주세요</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>관심 분야 (복수 선택 가능)</label>
+                        <div class="checkbox-group" role="group" aria-describedby="interests-help">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="interest-web" name="interests" value="web">
+                                <label for="interest-web">웹 개발</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="interest-mobile" name="interests" value="mobile">
+                                <label for="interest-mobile">모바일 개발</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="interest-ai" name="interests" value="ai">
+                                <label for="interest-ai">AI/ML</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="interest-devops" name="interests" value="devops">
+                                <label for="interest-devops">DevOps</label>
+                            </div>
+                        </div>
+                        <div id="interests-help" class="help-text">관심 있는 분야를 모두 선택해주세요</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="budget">예상 예산 (선택사항)</label>
+                        <input type="range" 
+                               id="budget" 
+                               name="budget" 
+                               min="100" 
+                               max="10000" 
+                               step="100" 
+                               value="1000"
+                               aria-describedby="budget-help">
+                        <div id="budget-help" class="help-text">
+                            현재 선택: <span id="budget-value">1,000</span>만원
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="preferred-date">희망 연락 날짜</label>
+                        <input type="date" 
+                               id="preferred-date" 
+                               name="preferredDate" 
+                               min=""
+                               aria-describedby="date-help">
+                        <div id="date-help" class="help-text">오늘 이후 날짜를 선택해주세요</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="preferred-time">희망 연락 시간</label>
+                        <input type="time" 
+                               id="preferred-time" 
+                               name="preferredTime"
+                               aria-describedby="time-help">
+                        <div id="time-help" class="help-text">업무 시간: 09:00 - 18:00</div>
+                    </div>
+                </fieldset>
+                
+                <!-- 약관 동의 필드셋 -->
+                <fieldset>
+                    <legend>약관 동의</legend>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" 
+                                   id="privacy-agree" 
+                                   name="privacyAgree" 
+                                   required
+                                   aria-describedby="privacy-error">
+                            <label for="privacy-agree" class="required">
+                                개인정보 처리방침에 동의합니다
+                            </label>
+                        </div>
+                        <div id="privacy-error" class="error-message" aria-live="polite"></div>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" 
+                                   id="marketing-agree" 
+                                   name="marketingAgree">
+                            <label for="marketing-agree">
+                                마케팅 정보 수신에 동의합니다 (선택)
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <!-- 버튼 그룹 -->
+                <div class="btn-group">
+                    <button type="button" id="reset-btn" class="btn-secondary">
+                        초기화
+                    </button>
+                    <button type="submit" id="submit-btn" class="btn-primary" disabled>
+                        문의하기
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- 추가 HTML5 입력 타입 데모 -->
+        <div class="form-section">
+            <h2>🧪 HTML5 입력 타입 데모</h2>
+            <form id="demo-form">
+                <fieldset>
+                    <legend>다양한 HTML5 입력 타입</legend>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="demo-url">웹사이트 URL</label>
+                            <input type="url" 
+                                   id="demo-url" 
+                                   name="website" 
+                                   placeholder="https://example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="demo-search">검색</label>
+                            <input type="search" 
+                                   id="demo-search" 
+                                   name="search" 
+                                   placeholder="검색어를 입력하세요">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="demo-color">좋아하는 색상</label>
+                            <input type="color" 
+                                   id="demo-color" 
+                                   name="favoriteColor" 
+                                   value="#3498db">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="demo-file">파일 업로드</label>
+                            <input type="file" 
+                                   id="demo-file" 
+                                   name="attachment" 
+                                   accept=".pdf,.doc,.docx,.txt"
+                                   aria-describedby="file-help">
+                            <div id="file-help" class="help-text">PDF, DOC, DOCX, TXT 파일만 가능</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="demo-datetime">미팅 일시</label>
+                        <input type="datetime-local" 
+                               id="demo-datetime" 
+                               name="meetingDateTime">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // DOM 요소 참조
+        const form = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const successMessage = document.getElementById('success-message');
+        const progressFill = document.querySelector('.progress-fill');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const charCount = document.getElementById('char-count');
+        const budgetValue = document.getElementById('budget-value');
+        const messageTextarea = document.getElementById('message');
+        const budgetRange = document.getElementById('budget');
+        const preferredDate = document.getElementById('preferred-date');
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 오늘 날짜 이후만 선택 가능하도록 설정
+            const today = new Date().toISOString().split('T')[0];
+            preferredDate.min = today;
+            
+            // 초기 폼 검증
+            validateForm();
+            updateProgress();
+        });
+
+        // 실시간 검증 및 피드백
+        form.addEventListener('input', function(e) {
+            validateField(e.target);
+            validateForm();
+            updateProgress();
+        });
+
+        form.addEventListener('change', function(e) {
+            validateField(e.target);
+            validateForm();
+            updateProgress();
+        });
+
+        // 메시지 글자 수 카운터
+        messageTextarea.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            
+            // 글자 수에 따른 색상 변경
+            if (count > 900) {
+                charCount.style.color = '#e74c3c';
+            } else if (count > 800) {
+                charCount.style.color = '#f39c12';
+            } else {
+                charCount.style.color = '#27ae60';
+            }
+        });
+
+        // 예산 범위 슬라이더
+        budgetRange.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            budgetValue.textContent = value.toLocaleString();
+        });
+
+        // 개별 필드 검증 함수
+        function validateField(field) {
+            const errorElement = document.getElementById(field.name + '-error') || 
+                               document.getElementById(field.id + '-error');
+            
+            if (!errorElement) return;
+
+            let errorMessage = '';
+
+            // 필수 필드 검사
+            if (field.hasAttribute('required') && !field.value.trim()) {
+                errorMessage = '이 필드는 필수입니다.';
+            }
+            // 이메일 검증
+            else if (field.type === 'email' && field.value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(field.value)) {
+                    errorMessage = '올바른 이메일 형식을 입력해주세요.';
+                }
+            }
+            // 전화번호 검증
+            else if (field.type === 'tel' && field.value) {
+                const phoneRegex = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
+                if (!phoneRegex.test(field.value)) {
+                    errorMessage = '전화번호 형식이 올바르지 않습니다. (예: 010-1234-5678)';
+                }
+            }
+            // 길이 검증
+            else if (field.minLength && field.value.length < field.minLength) {
+                errorMessage = `최소 ${field.minLength}자 이상 입력해주세요.`;
+            }
+            else if (field.maxLength && field.value.length > field.maxLength) {
+                errorMessage = `최대 ${field.maxLength}자까지만 입력 가능합니다.`;
+            }
+            // 숫자 범위 검증
+            else if (field.type === 'number' && field.value) {
+                const value = parseInt(field.value);
+                if (field.min && value < parseInt(field.min)) {
+                    errorMessage = `최소값은 ${field.min}입니다.`;
+                }
+                if (field.max && value > parseInt(field.max)) {
+                    errorMessage = `최대값은 ${field.max}입니다.`;
+                }
+            }
+
+            // 에러 메시지 표시
+            if (errorMessage) {
+                errorElement.textContent = errorMessage;
+                errorElement.style.display = 'block';
+                field.setAttribute('aria-invalid', 'true');
+            } else {
+                errorElement.style.display = 'none';
+                field.setAttribute('aria-invalid', 'false');
+            }
+        }
+
+        // 전체 폼 검증
+        function validateForm() {
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (field.type === 'checkbox') {
+                    if (!field.checked) isValid = false;
+                } else if (!field.value.trim()) {
+                    isValid = false;
+                }
+                
+                // 추가 검증 (이메일, 길이 등)
+                if (field.value.trim()) {
+                    if (field.type === 'email') {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(field.value)) isValid = false;
+                    }
+                    
+                    if (field.minLength && field.value.length < field.minLength) {
+                        isValid = false;
+                    }
+                }
+            });
+
+            submitBtn.disabled = !isValid;
+            return isValid;
+        }
+
+        // 진행률 업데이트
+        function updateProgress() {
+            const allFields = form.querySelectorAll('input, textarea, select');
+            const filledFields = Array.from(allFields).filter(field => {
+                if (field.type === 'checkbox' || field.type === 'radio') {
+                    return field.checked;
+                }
+                return field.value.trim() !== '';
+            });
+
+            const progress = Math.round((filledFields.length / allFields.length) * 100);
+            progressFill.style.width = progress + '%';
+            progressPercentage.textContent = progress + '%';
+            
+            // 진행률 바에 ARIA 속성 업데이트
+            progressFill.parentElement.setAttribute('aria-valuenow', progress);
+        }
+
+        // 폼 제출 처리
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                // 실제 환경에서는 서버로 데이터 전송
+                console.log('폼 데이터:', new FormData(form));
+                
+                // 성공 메시지 표시
+                successMessage.style.display = 'block';
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+                
+                // 폼 비활성화
+                submitBtn.disabled = true;
+                submitBtn.textContent = '제출 완료';
+                
+                // 성공 알림 (접근성)
+                const announcement = document.createElement('div');
+                announcement.setAttribute('aria-live', 'assertive');
+                announcement.className = 'visually-hidden';
+                announcement.textContent = '폼이 성공적으로 제출되었습니다.';
+                document.body.appendChild(announcement);
+                
+                setTimeout(() => {
+                    document.body.removeChild(announcement);
+                }, 1000);
+            }
+        });
+
+        // 폼 초기화
+        resetBtn.addEventListener('click', function() {
+            if (confirm('모든 입력 내용이 삭제됩니다. 계속하시겠습니까?')) {
+                form.reset();
+                
+                // 에러 메시지 숨기기
+                const errorMessages = form.querySelectorAll('.error-message');
+                errorMessages.forEach(msg => msg.style.display = 'none');
+                
+                // ARIA 속성 초기화
+                const fields = form.querySelectorAll('input, textarea, select');
+                fields.forEach(field => field.removeAttribute('aria-invalid'));
+                
+                // 성공 메시지 숨기기
+                successMessage.style.display = 'none';
+                
+                // 버튼 상태 초기화
+                submitBtn.disabled = true;
+                submitBtn.textContent = '문의하기';
+                
+                // 진행률 초기화
+                updateProgress();
+                
+                // 글자 수 카운터 초기화
+                charCount.textContent = '0';
+                charCount.style.color = '#27ae60';
+                
+                // 예산 값 초기화
+                budgetValue.textContent = '1,000';
+            }
+        });
+
+        // 키보드 접근성 개선
+        form.addEventListener('keydown', function(e) {
+            // Enter 키로 다음 필드로 이동 (textarea 제외)
+            if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                const fields = Array.from(form.querySelectorAll('input, textarea, select, button'));
+                const currentIndex = fields.indexOf(e.target);
+                const nextField = fields[currentIndex + 1];
+                
+                if (nextField) {
+                    nextField.focus();
+                }
+            }
+        });
+
+        // 실시간 도움말 (툴팁)
+        const helpTexts = document.querySelectorAll('.help-text');
+        helpTexts.forEach(helpText => {
+            const field = helpText.closest('.form-group').querySelector('input, textarea, select');
+            if (field) {
+                field.addEventListener('focus', function() {
+                    helpText.style.fontWeight = 'bold';
+                });
+                
+                field.addEventListener('blur', function() {
+                    helpText.style.fontWeight = 'normal';
+                });
+            }
+        });
+
+        // 데모 폼 기능
+        const demoForm = document.getElementById('demo-form');
+        const demoColor = document.getElementById('demo-color');
+        const demoFile = document.getElementById('demo-file');
+
+        // 색상 선택 시 배경색 변경
+        demoColor.addEventListener('change', function() {
+            document.body.style.background = `linear-gradient(135deg, ${this.value}22, #f5f7fa)`;
+        });
+
+        // 파일 선택 시 정보 표시
+        demoFile.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const fileInfo = `선택된 파일: ${file.name} (${(file.size / 1024).toFixed(1)}KB)`;
+                const helpElement = document.getElementById('file-help');
+                helpElement.textContent = fileInfo;
+                helpElement.style.color = '#27ae60';
+            }
+        });
+    </script>
+</body>
+</html>
