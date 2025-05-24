@@ -1,0 +1,31 @@
+
+# Week 1-2: HTML & CSS Fundamentals
+
+## Slide 1: 웹 기본 개념
+- 웹이란?
+- 브라우저와 서버의 관계
+
+## Slide 2: HTML 기본 구조
+```html
+<!DOCTYPE html>
+<html>
+<head><title>My First Page</title></head>
+<body>Hello, world!</body>
+</html>
+```
+
+## Slide 3: 시맨틱 태그
+- header, section, footer, nav
+- 의미 기반 구조 설계
+
+## Slide 4: CSS 선택자
+```css
+h1 { color: red; }
+#main { margin: 20px; }
+.box { border: 1px solid #000; }
+```
+
+## Slide 5: Flexbox 개요
+- flex-direction, justify-content, align-items
+
+... (이하 생략: 총 50장 분량)
