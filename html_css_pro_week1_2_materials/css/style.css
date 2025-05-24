@@ -1,0 +1,53 @@
+
+:root {
+  --main-color: #3b82f6;
+  --text-color: #1f2937;
+  --bg-color: #ffffff;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.header, .footer {
+  background-color: var(--main-color);
+  color: white;
+  padding: 1rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.hero {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.cta-btn {
+  background-color: var(--main-color);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
