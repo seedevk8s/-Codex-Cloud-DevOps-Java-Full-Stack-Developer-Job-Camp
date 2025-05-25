@@ -1,0 +1,67 @@
+graph TB
+    Start([교육 시작<br/>2025.05.27]) --> Foundation{기반 기술 학습<br/>117일}
+    
+    Foundation --> Linux[Linux 기초<br/>4일]
+    Foundation --> MSA[MSA 아키텍처<br/>10일]
+    Foundation --> DevOps[DevOps & CI/CD<br/>10일]
+    Foundation --> Container[Docker & K8s<br/>10일]
+    Foundation --> Security[Git & 보안<br/>3일]
+    
+    Foundation --> Programming{프로그래밍 기초<br/>25일}
+    Programming --> Java[Java 기본<br/>5일]
+    Programming --> OOP[객체지향<br/>5일]
+    Programming --> Network[네트워크<br/>5일]
+    Programming --> Frontend[프론트엔드<br/>15일]
+    
+    Foundation --> Backend{백엔드 개발<br/>30일}
+    Backend --> Database[데이터베이스<br/>10일]
+    Backend --> WebDev[웹 개발<br/>15일]
+    Backend --> Framework[프레임워크<br/>10일]
+    
+    Foundation --> Cloud[AWS 클라우드<br/>10일]
+    
+    Linux --> Projects
+    MSA --> Projects
+    DevOps --> Projects
+    Container --> Projects
+    Security --> Projects
+    Java --> Projects
+    OOP --> Projects
+    Network --> Projects
+    Frontend --> Projects
+    Database --> Projects
+    WebDev --> Projects
+    Framework --> Projects
+    Cloud --> Projects
+    
+    Projects{실무 프로젝트<br/>30일} --> Project1[프로젝트 1<br/>관광지 추천 서비스<br/>MSA + 날씨 API]
+    Projects --> Project2[프로젝트 2<br/>메타버스 화상회의<br/>WebRTC + K8s]
+    Projects --> Project3[프로젝트 3<br/>커피전문점 관리<br/>마이크로서비스]
+    Projects --> Project4[프로젝트 4<br/>디지털교육 플랫폼<br/>LMS + 학사관리]
+    Projects --> Project5[프로젝트 5<br/>학생역량 관리<br/>스마트공장 연동]
+    
+    Project1 --> Skills1[습득 기술:<br/>• MSA 설계<br/>• 외부 API 연동<br/>• 데이터 처리<br/>• 추천 알고리즘]
+    Project2 --> Skills2[습득 기술:<br/>• 실시간 통신<br/>• 컨테이너 배포<br/>• 미디어 스트리밍<br/>• 클러스터 관리]
+    Project3 --> Skills3[습득 기술:<br/>• 서비스 분리<br/>• 주문 처리<br/>• 결제 시스템<br/>• 재고 관리]
+    Project4 --> Skills4[습득 기술:<br/>• 교육 시스템<br/>• 사용자 관리<br/>• 콘텐츠 관리<br/>• 평가 시스템]
+    Project5 --> Skills5[습득 기술:<br/>• 통합 관리<br/>• 상담 시스템<br/>• IoT 연동<br/>• 물류 관리]
+    
+    Skills1 --> Complete([교육 완료<br/>2025.11.20<br/>클라우드 데브옵스 전문가])
+    Skills2 --> Complete
+    Skills3 --> Complete
+    Skills4 --> Complete
+    Skills5 --> Complete
+    
+    classDef startEnd fill:#ff6b6b,color:#fff,stroke:#fff,stroke-width:3px
+    classDef foundation fill:#4ecdc4,color:#fff,stroke:#fff,stroke-width:2px
+    classDef skills fill:#45b7d1,color:#fff,stroke:#fff,stroke-width:2px
+    classDef projects fill:#f9ca24,color:#333,stroke:#fff,stroke-width:2px
+    classDef projectDetail fill:#6c5ce7,color:#fff,stroke:#fff,stroke-width:2px
+    classDef skillDetail fill:#a29bfe,color:#fff,stroke:#fff,stroke-width:2px
+    
+    class Start,Complete startEnd
+    class Foundation,Programming,Backend foundation
+    class Linux,MSA,DevOps,Container,Security,Java,OOP,Network,Frontend,Database,WebDev,Framework,Cloud skills
+    class Projects projects
+    class Project1,Project2,Project3,Project4,Project5 projectDetail
+    class Skills1,Skills2,Skills3,Skills4,Skills5 skillDetail
