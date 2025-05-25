@@ -1,0 +1,39 @@
+gantt
+    title 클라우드 데브옵스 교육과정 커리큘럼 (2025.05.27 ~ 2025.11.20)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %m/%d
+
+    section 1단계: 클라우드 개발환경
+    Linux 기초               :active, linux, 2025-05-27, 4d
+    MSA 개발방법            :msa, after linux, 10d
+    DevOps                  :devops, after msa, 10d
+    Docker & Kubernetes     :docker, after devops, 10d
+    Git & 보안관리          :git, after docker, 3d
+
+    section 2단계: 객체지향 프로그래밍
+    Java 기본문법           :java1, 2025-07-21, 5d
+    클래스와 객체           :java2, after java1, 5d
+    입출력 & 네트워크       :java3, after java2, 5d
+
+    section 3단계: 프론트엔드
+    HTML5 & CSS3           :html, 2025-08-11, 5d
+    Javascript             :js, after html, 10d
+    React                  :react, after js, 5d
+
+    section 4단계: 데이터베이스
+    DB 구현 & 모델링       :db1, 2025-09-08, 5d
+    SQL 활용               :db2, after db1, 5d
+
+    section 5단계: 백엔드 개발
+    JDBC                   :jdbc, 2025-09-22, 5d
+    JSP & Servlet          :jsp, after jdbc, 10d
+    MyBatis                :mybatis, after jsp, 5d
+    Spring Boot            :spring, after mybatis, 5d
+
+    section 6단계: 클라우드 플랫폼
+    AWS 클라우드           :aws, 2025-10-27, 10d
+
+    section 7단계: 실무 프로젝트
+    관광지 추천 프로젝트    :proj1, 2025-11-10, 5d
+    메타버스 화상회의      :proj2, after proj1, 5d
+    교육과정 완료          :milestone, complete, after proj2, 1d
