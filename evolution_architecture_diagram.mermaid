@@ -1,0 +1,68 @@
+graph TB
+    subgraph "모놀리스 시대 (Pre-2015)"
+        A[단일 애플리케이션]
+        A --> B[단일 서버]
+        B --> C[수동 배포]
+        C --> D[확장성 제약]
+    end
+    
+    subgraph "클라우드 네이티브 시대 (2015-2023)"
+        E[마이크로서비스]
+        F[컨테이너]
+        G[Kubernetes]
+        H[DevOps/CI/CD]
+        I[API Gateway]
+        J[서비스 메시]
+        
+        E --> F
+        F --> G
+        G --> H
+        H --> I
+        I --> J
+        
+        style E fill:#e1f5fe
+        style F fill:#e1f5fe
+        style G fill:#e1f5fe
+    end
+    
+    subgraph "AI 네이티브 시대 (2024-2025)"
+        K[AI 에이전트]
+        L[LLM 통합]
+        M[벡터 데이터베이스]
+        N[AI 오케스트레이션]
+        O[멀티모달 API]
+        P[추론 엔진]
+        Q[에이젠틱 워크플로우]
+        
+        K --> L
+        L --> M
+        M --> N
+        N --> O
+        O --> P
+        P --> Q
+        
+        style K fill:#fff3e0
+        style L fill:#fff3e0
+        style M fill:#fff3e0
+        style N fill:#fff3e0
+    end
+    
+    subgraph "핵심 기술 진화"
+        R[스케일링] --> S[자동 스케일링]
+        T[배포] --> U[무중단 배포]
+        V[모니터링] --> W[AI 기반 관측성]
+        X[보안] --> Y[AI 보안 & 거버넌스]
+    end
+    
+    A --> E
+    D --> F
+    J --> K
+    W --> Q
+    
+    classDef monolith fill:#ffebee
+    classDef cloudnative fill:#e1f5fe
+    classDef ainative fill:#fff3e0
+    
+    class A,B,C,D monolith
+    class E,F,G,H,I,J cloudnative
+    class K,L,M,N,O,P,Q ainative
