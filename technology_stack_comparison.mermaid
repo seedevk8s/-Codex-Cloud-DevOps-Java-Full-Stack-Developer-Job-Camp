@@ -1,0 +1,53 @@
+graph LR
+    subgraph "클라우드 네이티브 스택"
+        CN1[Application Layer]
+        CN2[Container Orchestration]
+        CN3[Container Runtime]
+        CN4[Infrastructure]
+        
+        CN1 --> CN1A[Spring Boot<br/>React<br/>Node.js]
+        CN2 --> CN2A[Kubernetes<br/>Docker Swarm<br/>Nomad]
+        CN3 --> CN3A[Docker<br/>containerd<br/>Podman]
+        CN4 --> CN4A[AWS<br/>Azure<br/>GCP]
+        
+        style CN1 fill:#e3f2fd
+        style CN2 fill:#e8f5e8
+        style CN3 fill:#fff3e0
+        style CN4 fill:#fce4ec
+    end
+    
+    subgraph "AI 네이티브 스택"
+        AI1[AI Agent Layer]
+        AI2[AI Orchestration]
+        AI3[Model Runtime]
+        AI4[Data & Compute]
+        
+        AI1 --> AI1A[LangChain<br/>CrewAI<br/>AutoGen]
+        AI2 --> AI2A[Ray<br/>Kubeflow<br/>MLflow]
+        AI3 --> AI3A[Ollama<br/>vLLM<br/>TensorRT]
+        AI4 --> AI4A[Vector DBs<br/>GPU Clusters<br/>Model Repos]
+        
+        style AI1 fill:#fff8e1
+        style AI2 fill:#f3e5f5
+        style AI3 fill:#e0f2f1
+        style AI4 fill:#ffebee
+    end
+    
+    subgraph "통합 레이어"
+        INT1[API Gateway]
+        INT2[Event Streaming]
+        INT3[Monitoring]
+        
+        INT1 --> INT1A[Kong<br/>Istio<br/>Envoy]
+        INT2 --> INT2A[Kafka<br/>Pulsar<br/>NATS]
+        INT3 --> INT3A[Prometheus<br/>Grafana<br/>Jaeger]
+    end
+    
+    CN4 -.-> AI4
+    CN3 -.-> AI3
+    CN2 -.-> AI2
+    CN1 -.-> AI1
+    
+    CN2 --> INT1
+    AI2 --> INT2
+    AI3 --> INT3
