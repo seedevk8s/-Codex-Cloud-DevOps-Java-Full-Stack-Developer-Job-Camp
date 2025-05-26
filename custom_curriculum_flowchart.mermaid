@@ -8,7 +8,7 @@ flowchart TD
     Phase1 --> DevOps[DevOps<br/><br/>CI/CD, Jenkins, Terraform]
     Phase1 --> MSA[MSA 개발방법<br/><br/>아키텍처, DDD, 스크럼]
     
-    Docker --> Phase2{2단계: 객체지향 프로그래밍<br/><br/>Java 기반}
+    Docker --> Phase2{2단계: 객체지향 프로그래밍<br/>Java 기반}
     
     Phase2 --> Java1[Java 기본문법<br/><br/>자료형, 제어문, 배열, 메소드]
     
@@ -25,7 +25,7 @@ flowchart TD
     Java2 --> OOP3[다형성<br/>추상클래스, 인터페이스<br/>업캐스팅, 다운캐스팅]
     Java2 --> OOP4[고급 개념<br/>제네릭, 컬렉션<br/>예외처리, 람다식]
     
-    OOP1 --> Java3[입출력 & 네트워크<br/><br/>실무 프로그래밍]
+    OOP1 --> Java3[입출력<br/><br/>실무 프로그래밍]
     OOP2 --> Java3
     OOP3 --> Java3
     OOP4 --> Java3
@@ -145,10 +145,10 @@ flowchart TD
     ReactAdvanced --> ReactSub6[라우팅<br/>React Router<br/>네비게이션]
     
     %% 7단계 클라우드 플랫폼 병행
-    DevOps --> CloudPhase7[7단계: 클라우드 플랫폼<br/><br/>병행 진행]
+    DevOps --> CloudPhase7[7단계: 도커, 클라우드 플랫폼<br/><br/>병행 진행]
     JS --> CloudPhase7
     CloudPhase7 --> AWSBasic[AWS 기초<br/><br/>EC2, S3]
-    CloudPhase7 --> AWSAdvanced[AWS 고급<br/><br/>RDS, Lambda]
+    CloudPhase7 --> AWSAdvanced[AWS 고급<br/><br/>RDS]
     
     %% 8단계 실무 프로젝트 병행
     SQLPractice --> ProjectPhase8[8단계: 실무 프로젝트<br/><br/>병행 진행]
@@ -156,13 +156,13 @@ flowchart TD
     ReactSub6 --> ProjectPhase8
     AWSAdvanced --> ProjectPhase8
     
-    ProjectPhase8 --> Proj1[관광지 추천 서비스<br/><br/>MSA 기반, 날씨정보 활용]
-    ProjectPhase8 --> Proj2[메타버스 화상회의<br/><br/>WebRTC, 쿠버네티스]
-    ProjectPhase8 --> Proj3[커피전문점 관리<br/><br/>매장관리 시스템]
-    ProjectPhase8 --> Proj4[디지털교육 플랫폼<br/><br/>LMS, 학사관리]
-    ProjectPhase8 --> Proj5[학생역량 통합관리<br/><br/>스마트공장 시스템]
+    ProjectPhase8 --> Proj1[OOO 서비스<br/>OO정보 활용]
+    ProjectPhase8 --> Proj2[OOO 회의<br/>]
+    ProjectPhase8 --> Proj3[OO전문점 관리<br/>OOOO 시스템]
+    ProjectPhase8 --> Proj4[OOO 플랫폼<br/><br/>]
+    ProjectPhase8 --> Proj5[OOOO 통합관리<br/>OOO 시스템]
     
-    ReactSub6 --> Complete([교육완료<br/>2025.11.20<br/>클라우드 데브옵스 전문가])
+    ReactSub6 --> Complete([교육완료<br/>2025.11.20<br/>])
     Proj5 --> Complete
     
     %% 접기 기능을 위한 서브그래프
