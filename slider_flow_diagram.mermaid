@@ -1,0 +1,18 @@
+flowchart TD
+    A[페이지 로드] --> B[슬라이더 초기값: 20<br/>span 텍스트: 20]
+    B --> C{사용자가 슬라이더를<br/>움직임}
+    C --> D[oninput 이벤트 발생]
+    D --> E[this.value로<br/>현재 슬라이더 값 가져오기]
+    E --> F[document.getElementById로<br/>'selected-value' 요소 찾기]
+    F --> G[span 요소의 innerText를<br/>슬라이더 값으로 변경]
+    G --> H[화면에 새로운 값 표시]
+    H --> C
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#fff3e0
+    style D fill:#e8f5e8
+    style E fill:#e8f5e8
+    style F fill:#e8f5e8
+    style G fill:#e8f5e8
+    style H fill:#fce4ec
