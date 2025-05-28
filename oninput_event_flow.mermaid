@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant User as 사용자
+    participant Slider as Range Input
+    participant Browser as 브라우저 엔진
+    participant DOM as DOM 요소
+    participant JS as JavaScript 엔진
+    participant Span as span#selected-value
+
+    User->>Slider: 슬라이더 드래그/클릭
+    Slider->>Browser: 값 변경 감지
+    Browser->>DOM: input 이벤트 생성
+    DOM->>JS: oninput 속성의 코드 실행
+    Note over JS: this.value로 현재 값 획득
+    JS->>DOM: getElementById('selected-value') 호출
+    DOM->>JS: span 요소 반환
+    JS->>Span: innerText 속성에 값 할당
+    Span->>User: 화면에 업데이트된 값 표시
