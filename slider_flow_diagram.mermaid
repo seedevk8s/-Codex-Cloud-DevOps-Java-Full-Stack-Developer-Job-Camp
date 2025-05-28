@@ -1,0 +1,51 @@
+flowchart TB
+    subgraph HTML["HTML 소스 코드"]
+        A1["&lt;input type='range' min='0' max='100'<br/>step='1' value='20'<br/>oninput='document.getElementById...'&gt;"]
+        A2["&lt;span id='selected-value'&gt;20&lt;/span&gt;"]
+    end
+    
+    subgraph INIT["초기 상태"]
+        B1["🎚️ 슬라이더<br/>값: 20"]
+        B2["📱 span 표시<br/>20"]
+    end
+    
+    subgraph ACTION["사용자 동작"]
+        C["👆 사용자가<br/>슬라이더를 50으로 이동"]
+    end
+    
+    subgraph EVENT["이벤트 처리"]
+        D["⚡ oninput 이벤트 발생"]
+        E["this.value = 50<br/>(슬라이더 현재값)"]
+        F["document.getElementById<br/>('selected-value')"]
+        G["span.innerText = 50<br/>(값 할당)"]
+    end
+    
+    subgraph RESULT["결과"]
+        H["🎚️ 슬라이더<br/>값: 50"]
+        I["📱 span 표시<br/>50"]
+    end
+    
+    A1 --> B1
+    A2 --> B2
+    B1 --> C
+    B2 --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    G --> I
+    
+    I -.-> C
+    
+    style A1 fill:#ffe0b2
+    style A2 fill:#ffe0b2
+    style B1 fill:#e1f5fe
+    style B2 fill:#e1f5fe
+    style C fill:#fff3e0
+    style D fill:#e8f5e8
+    style E fill:#e8f5e8
+    style F fill:#e8f5e8
+    style G fill:#e8f5e8
+    style H fill:#f3e5f5
+    style I fill:#f3e5f5
