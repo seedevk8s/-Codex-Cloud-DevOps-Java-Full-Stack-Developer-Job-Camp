@@ -1,0 +1,30 @@
+graph TB
+    A[메인 페이지<br/>button-2.html] -->|클릭| B[window.open 실행]
+    B --> C[새창 생성<br/>width=300, height=400]
+    
+    C --> D[새창 구조]
+    D --> E[브라우저 프레임<br/>제목표시줄, 테두리]
+    D --> F[뷰포트<br/>실제 콘텐츠 영역]
+    
+    F --> G[Body 요소<br/>display: flex<br/>justify-content: center<br/>align-items: center<br/>min-height: 100vh]
+    
+    G --> H[#container<br/>width: 250px<br/>height: 375px<br/>중앙 배치됨]
+    
+    H --> I[콘텐츠]
+    I --> J[공지사항 제목]
+    I --> K[텍스트 1]
+    I --> L[텍스트 2]
+    I --> M[배경 이미지<br/>notice.jpg]
+    
+    subgraph "새창 위치"
+        N[화면상 위치]
+        N --> O[브라우저 기본값<br/>위치 지정 안됨]
+        N --> P[중앙이 아닌 곳에 생성]
+    end
+    
+    subgraph "새창 내부 레이아웃"
+        Q[Flexbox 중앙 정렬]
+        Q --> R[수평 중앙: justify-content]
+        Q --> S[수직 중앙: align-items]
+        Q --> T[전체 높이: min-height 100vh]
+    end
