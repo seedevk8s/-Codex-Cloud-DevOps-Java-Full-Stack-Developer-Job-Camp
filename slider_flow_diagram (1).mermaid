@@ -1,0 +1,20 @@
+flowchart LR
+    A[슬라이더<br/>초기값: 20] --> B[화면 표시<br/>20]
+    
+    C[사용자가<br/>슬라이더 움직임] --> D[oninput 이벤트<br/>발생]
+    
+    D --> E[현재 슬라이더 값<br/>가져오기]
+    
+    E --> F[화면 숫자<br/>업데이트]
+    
+    F --> G[새로운 값<br/>화면에 표시]
+    
+    G -.-> C
+    
+    style A fill:#e1f5fe
+    style B fill:#e1f5fe
+    style C fill:#fff3e0
+    style D fill:#e8f5e8
+    style E fill:#e8f5e8
+    style F fill:#ffecb3
+    style G fill:#f3e5f5
