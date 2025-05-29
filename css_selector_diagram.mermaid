@@ -1,0 +1,24 @@
+flowchart TD
+    A["CSS 선택자: li label[for]"] --> B{"li 요소 찾기"}
+    B --> C["li 요소 1: 이름"]
+    B --> D["li 요소 2: 연락처"] 
+    B --> E["li 요소 3: 라디오버튼들"]
+    
+    C --> F{"label 요소 있나?"}
+    D --> G{"label 요소 있나?"}
+    E --> H{"label 요소 있나?"}
+    
+    F --> I["label for=sname"]
+    G --> J["label for=snumber"]
+    H --> K["label (for 속성 없음)"]
+    
+    I --> L{"for 속성 있나?"}
+    J --> M{"for 속성 있나?"}
+    K --> N{"for 속성 있나?"}
+    
+    L --> O["스타일 적용 O"]
+    M --> P["스타일 적용 O"]
+    N --> Q["스타일 적용 X"]
+    
+    O --> R["width: 60px<br/>display: inline-block<br/>text-align: left"]
+    P --> S["width: 60px<br/>display: inline-block<br/>text-align: left"]
