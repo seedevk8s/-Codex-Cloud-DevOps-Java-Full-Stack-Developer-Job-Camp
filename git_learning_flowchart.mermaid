@@ -1,0 +1,67 @@
+flowchart TD
+    A[Git 학습 시작] --> B{Git이 무엇인가?}
+    B --> C[버전 관리 시스템 이해]
+    C --> D[Git 설치 및 환경설정]
+    D --> E[Git 기본 개념 학습]
+    
+    E --> F[Working Directory]
+    E --> G[Staging Area]
+    E --> H[Repository]
+    
+    F --> I[git init - 저장소 초기화]
+    G --> J[git add - 파일 스테이징]
+    H --> K[git commit - 변경사항 저장]
+    
+    I --> L[기본 Git 명령어 실습]
+    J --> L
+    K --> L
+    
+    L --> M[git status - 상태 확인]
+    L --> N[git log - 커밋 히스토리]
+    L --> O[git diff - 변경사항 비교]
+    
+    M --> P[브랜치 개념 학습]
+    N --> P
+    O --> P
+    
+    P --> Q[git branch - 브랜치 생성]
+    P --> R[git checkout/switch - 브랜치 전환]
+    P --> S[git merge - 브랜치 병합]
+    
+    Q --> T[원격 저장소 개념]
+    R --> T
+    S --> T
+    
+    T --> U[GitHub 계정 생성]
+    U --> V[git remote - 원격 저장소 연결]
+    V --> W[git push - 원격으로 업로드]
+    V --> X[git pull - 원격에서 다운로드]
+    V --> Y[git clone - 저장소 복제]
+    
+    W --> Z[협업 워크플로우]
+    X --> Z
+    Y --> Z
+    
+    Z --> AA[Fork & Pull Request]
+    Z --> AB[Issue 관리]
+    Z --> AC[코드 리뷰]
+    
+    AA --> AD[Git 고급 기능]
+    AB --> AD
+    AC --> AD
+    
+    AD --> AE[git rebase - 커밋 재정렬]
+    AD --> AF[git stash - 임시 저장]
+    AD --> AG[git reset/revert - 되돌리기]
+    
+    AE --> AH[실무 시나리오 연습]
+    AF --> AH
+    AG --> AH
+    
+    AH --> AI[팀 프로젝트 적용]
+    AI --> AJ[Git 마스터! 🎉]
+    
+    style A fill:#e1f5fe
+    style AJ fill:#c8e6c9
+    style Z fill:#fff3e0
+    style AD fill:#fce4ec
