@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box Model 실습 - Border, Margin, Padding</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .explanation {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+
+        .demo-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .demo-box {
+            background-color: #e74c3c;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        /* Margin 예제 */
+        .margin-demo {
+            background: #f8f9fa;
+            padding: 20px;
+            border: 2px dashed #6c757d;
+        }
+
+        .margin-example-1 { margin: 0; }
+        .margin-example-2 { margin: 20px; }
+        .margin-example-3 { margin: 10px 30px; }
+        .margin-example-4 { margin: 5px 15px 25px 35px; }
+
+        /* Padding 예제 */
+        .padding-example-1 { padding: 0; }
+        .padding-example-2 { padding: 20px; }
+        .padding-example-3 { padding: 10px 30px; }
+        .padding-example-4 { padding: 5px 15px 25px 35px; }
+
+        /* Border 예제 */
+        .border-example-1 { border: none; }
+        .border-example-2 { border: 3px solid #2ecc71; }
+        .border-example-3 { border: 5px dashed #f39c12; }
+        .border-example-4 { border: 8px dotted #9b59b6; }
+
+        /* 조합 예제 */
+        .combo-example-1 {
+            margin: 20px;
+            padding: 15px;
+            border: 3px solid #34495e;
+        }
+
+        .combo-example-2 {
+            margin: 30px;
+            padding: 25px;
+            border: 5px dashed #e67e22;
+        }
+
+        /* 인터랙티브 컨트롤 */
+        .controls {
+            background: #fff;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .control-group input[type="range"] {
+            width: 200px;
+            margin: 0 10px;
+        }
+
+        .control-group span {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        #interactive-box {
+            width: 200px;
+            height: 100px;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 20px auto;
+            transition: all 0.3s ease;
+        }
+
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .visual-guide {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .box-model-diagram {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #e74c3c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .margin-layer {
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            right: -30px;
+            bottom: -30px;
+            border: 3px dashed #f39c12;
+            background: rgba(243, 156, 18, 0.1);
+        }
+
+        .border-layer {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 10px solid #2ecc71;
+        }
+
+        .padding-layer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid #9b59b6;
+            background: rgba(155, 89, 182, 0.1);
+        }
+
+        .labels {
+            position: absolute;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .margin-label { top: -50px; left: 0; color: #f39c12; }
+        .border-label { top: -25px; left: 0; color: #2ecc71; }
+        .padding-label { top: 5px; left: 0; color: #9b59b6; }
+        .content-label { top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                flex-direction: column;
+            }
+            
+            .demo-box {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 CSS Box Model 실습</h1>
+        
+        <!-- Box Model 다이어그램 -->
+        <div class="section">
+            <h2>📊 Box Model 구조</h2>
+            <div class="explanation">
+                <p><strong>Box Model</strong>은 모든 HTML 요소가 가지는 박스 형태의 구조입니다.</p>
+                <p>안쪽부터: <span style="color: #e74c3c;">Content</span> → <span style="color: #9b59b6;">Padding</span> → <span style="color: #2ecc71;">Border</span> → <span style="color: #f39c12;">Margin</span></p>
+            </div>
+            
+            <div class="visual-guide">
+                <div style="position: relative;">
+                    <div class="margin-layer"></div>
+                    <div class="border-layer"></div>
+                    <div class="padding-layer"></div>
+                    <div class="box-model-diagram">
+                        CONTENT
+                    </div>
+                    <div class="labels margin-label">Margin</div>
+                    <div class="labels border-label">Border</div>
+                    <div class="labels padding-label">Padding</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Margin 섹션 -->
+        <div class="section">
+            <h2>🔸 Margin (바깥 여백)</h2>
+            <div class="explanation">
+                <p><strong>Margin</strong>은 요소의 <strong>바깥쪽 여백</strong>입니다. 다른 요소와의 거리를 조절합니다.</p>
+                <p>배경색이 적용되지 않으며, 투명합니다.</p>
+            </div>
+            
+            <div class="margin-demo">
+                <div class="demo-container">
+                    <div class="demo-box margin-example-1">margin: 0</div>
+                    <div class="demo-box margin-example-2">margin: 20px</div>
+                    <div class="demo-box margin-example-3">margin: 10px 30px</div>
+                    <div class="demo-box margin-example-4">margin: 5px 15px 25px 35px</div>
+                </div>
+            </div>
+            
+            <div class="code-example">
+.box1 { margin: 0; }                    /* 모든 방향 0 */
+.box2 { margin: 20px; }                 /* 모든 방향 20px */
+.box3 { margin: 10px 30px; }            /* 위아래 10px, 좌우 30px */
+.box4 { margin: 5px 15px 25px 35px; }   /* 위 5px, 우 15px, 아래 25px, 좌 35px */
+            </div>
+        </div>
+
+        <!-- Padding 섹션 -->
+        <div class="section">
+            <h2>🔹 Padding (안쪽 여백)</h2>
+            <div class="explanation">
+                <p><strong>Padding</strong>은 요소의 <strong>안쪽 여백</strong>입니다. 내용과 테두리 사이의 공간입니다.</p>
+                <p>요소의 배경색이 padding 영역에도 적용됩니다.</p>
+            </div>
+            
+            <div class="demo-container">
+                <div class="demo-box padding-example-1">padding: 0</div>
+                <div class="demo-box padding-example-2">padding: 20px</div>
+                <div class="demo-box padding-example-3">padding: 10px 30px</div>
+                <div class="demo-box padding-example-4">padding: 5px 15px 25px 35px</div>
+            </div>
+            
+            <div class="code-example">
+.box1 { padding: 0; }                    /* 모든 방향 0 */
+.box2 { padding: 20px; }                 /* 모든 방향 20px */
+.box3 { padding: 10px 30px; }            /* 위아래 10px, 좌우 30px */
+.box4 { padding: 5px 15px 25px 35px; }   /* 위 5px, 우 15px, 아래 25px, 좌 35px */
+            </div>
+        </div>
+
+        <!-- Border 섹션 -->
+        <div class="section">
+            <h2>🔲 Border (테두리)</h2>
+            <div class="explanation">
+                <p><strong>Border</strong>는 요소의 <strong>테두리</strong>입니다. padding과 margin 사이에 위치합니다.</p>
+                <p>색상, 두께, 스타일을 지정할 수 있습니다.</p>
+            </div>
+            
+            <div class="demo-container">
+                <div class="demo-box border-example-1">border: none</div>
+                <div class="demo-box border-example-2">border: 3px solid</div>
+                <div class="demo-box border-example-3">border: 5px dashed</div>
+                <div class="demo-box border-example-4">border: 8px dotted</div>
+            </div>
+            
+            <div class="code-example">
+.box1 { border: none; }                     /* 테두리 없음 */
+.box2 { border: 3px solid #2ecc71; }        /* 3px 실선 */
+.box3 { border: 5px dashed #f39c12; }       /* 5px 점선 */
+.box4 { border: 8px dotted #9b59b6; }       /* 8px 점 테두리 */
+            </div>
+        </div>
+
+        <!-- 조합 예제 -->
+        <div class="section">
+            <h2>🎨 조합 예제</h2>
+            <div class="explanation">
+                <p>Margin, Padding, Border를 함께 사용한 예제입니다.</p>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border: 2px dashed #6c757d;">
+                <div class="demo-container">
+                    <div class="demo-box combo-example-1">
+                        margin: 20px<br>
+                        padding: 15px<br>
+                        border: 3px solid
+                    </div>
+                    <div class="demo-box combo-example-2">
+                        margin: 30px<br>
+                        padding: 25px<br>
+                        border: 5px dashed
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 인터랙티브 실습 -->
+        <div class="section">
+            <h2>⚡ 인터랙티브 실습</h2>
+            <div class="explanation">
+                <p>슬라이더를 조작하여 실시간으로 변화를 확인해보세요!</p>
+            </div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <label>Margin:</label>
+                    <input type="range" id="margin-slider" min="0" max="50" value="20">
+                    <span id="margin-value">20px</span>
+                </div>
+                
+                <div class="control-group">
+                    <label>Padding:</label>
+                    <input type="range" id="padding-slider" min="0" max="50" value="15">
+                    <span id="padding-value">15px</span>
+                </div>
+                
+                <div class="control-group">
+                    <label>Border:</label>
+                    <input type="range" id="border-slider" min="0" max="20" value="3">
+                    <span id="border-value">3px</span>
+                </div>
+            </div>
+            
+            <div id="interactive-box">
+                실시간 변화 확인
+            </div>
+            
+            <div class="code-example" id="current-css">
+margin: 20px;
+padding: 15px;
+border: 3px solid #2ecc71;
+            </div>
+        </div>
+
+        <!-- 실습 문제 -->
+        <div class="section">
+            <h2>📝 실습 과제</h2>
+            <div class="explanation">
+                <p><strong>과제:</strong> 아래 요구사항에 맞는 CSS를 작성해보세요.</p>
+                <ol>
+                    <li>위아래 margin 30px, 좌우 margin 20px</li>
+                    <li>모든 방향 padding 25px</li>
+                    <li>5px 두께의 빨간색 실선 테두리</li>
+                    <li>배경색은 연한 파란색(#e3f2fd)</li>
+                </ol>
+            </div>
+            
+            <div class="code-example">
+/* 여기에 CSS를 작성해보세요 */
+.practice-box {
+    /* 답: margin: 30px 20px; */
+    /* 답: padding: 25px; */
+    /* 답: border: 5px solid red; */
+    /* 답: background-color: #e3f2fd; */
+}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 인터랙티브 기능
+        const marginSlider = document.getElementById('margin-slider');
+        const paddingSlider = document.getElementById('padding-slider');
+        const borderSlider = document.getElementById('border-slider');
+        
+        const marginValue = document.getElementById('margin-value');
+        const paddingValue = document.getElementById('padding-value');
+        const borderValue = document.getElementById('border-value');
+        
+        const interactiveBox = document.getElementById('interactive-box');
+        const currentCSS = document.getElementById('current-css');
+
+        function updateBox() {
+            const margin = marginSlider.value;
+            const padding = paddingSlider.value;
+            const border = borderSlider.value;
+            
+            marginValue.textContent = margin + 'px';
+            paddingValue.textContent = padding + 'px';
+            borderValue.textContent = border + 'px';
+            
+            interactiveBox.style.margin = margin + 'px';
+            interactiveBox.style.padding = padding + 'px';
+            interactiveBox.style.border = border + 'px solid #2ecc71';
+            
+            currentCSS.textContent = `margin: ${margin}px;\npadding: ${padding}px;\nborder: ${border}px solid #2ecc71;`;
+        }
+
+        marginSlider.addEventListener('input', updateBox);
+        paddingSlider.addEventListener('input', updateBox);
+        borderSlider.addEventListener('input', updateBox);
+        
+        // 초기 상태 설정
+        updateBox();
+    </script>
+</body>
+</html>
