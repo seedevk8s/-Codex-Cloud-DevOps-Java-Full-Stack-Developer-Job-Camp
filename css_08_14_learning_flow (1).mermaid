@@ -1,0 +1,50 @@
+flowchart TD
+    A[Do it! CSS 08-14<br/>3일 집중 학습 시작] --> B[🗓️ Day 1: 박스모델 & 레이아웃<br/>총 6-8시간]
+    
+    B --> C[08장: CSS 박스모델<br/>⭐⭐⭐⭐⭐ 2.5시간<br/>box-sizing, margin collapse<br/>padding/border 완전 정복]
+    B --> D[09장: CSS 레이아웃<br/>⭐⭐⭐⭐⭐ 2.5시간<br/>float/position/z-index<br/>overflow 속성 마스터]
+    B --> E[10장: 시맨틱 태그<br/>⭐⭐⭐⭐ 2시간<br/>header/nav/main/section<br/>SEO 친화적 구조]
+    
+    C --> N{Day 1 완료 체크<br/>□ 박스모델 완전 이해<br/>□ Float/Position 3가지 구현<br/>□ 시맨틱 웹페이지 구조<br/>□ 반응형 이미지 처리}
+    D --> N
+    E --> N
+    
+    N -->|미완료| O[🔄 복습 및 재학습<br/>Chrome DevTools 활용<br/>실습 파일 재점검]
+    O --> C
+    N -->|완료| F[🗓️ Day 2: 고급 CSS 기법<br/>총 6-8시간]
+    
+    F --> G[11장: 멀티미디어<br/>⭐⭐⭐ 2시간<br/>반응형 이미지/비디오<br/>object-fit 활용]
+    F --> H[12장: CSS 선택자<br/>⭐⭐⭐⭐⭐ 2시간<br/>속성/가상클래스/가상요소<br/>선택자 우선순위]
+    F --> I[13장: CSS 애니메이션<br/>⭐⭐⭐⭐⭐ 3시간<br/>transition/transform<br/>@keyframes 애니메이션]
+    
+    G --> Q{Day 2 완료 체크<br/>□ 고급 선택자 10가지<br/>□ 애니메이션 5가지 구현<br/>□ 멀티미디어 반응형<br/>□ 인터랙티브 컴포넌트}
+    H --> Q
+    I --> Q
+    
+    Q -->|미완료| R[🔄 실습 반복<br/>CodePen 예제 참고<br/>애니메이션 성능 최적화]
+    R --> G
+    Q -->|완료| J[🗓️ Day 3: 반응형 & 실전<br/>총 6-8시간]
+    
+    J --> K[14장: 반응형 웹<br/>⭐⭐⭐⭐⭐ 4시간<br/>미디어쿼리/모바일퍼스트<br/>breakpoint 전략]
+    J --> L[종합 프로젝트 실습<br/>3시간<br/>포트폴리오/랜딩페이지<br/>모든 기법 통합]
+    J --> M[최적화 & 배포준비<br/>1시간<br/>코드 리팩토링<br/>크로스브라우저 테스트]
+    
+    K --> T{Day 3 최종 완료 체크<br/>□ 완전한 반응형 웹사이트<br/>□ 모든 기기 테스트 완료<br/>□ CSS 코드 최적화<br/>□ 포트폴리오 배포 준비}
+    L --> T
+    M --> T
+    
+    T -->|미완료| S[🔄 최종 점검<br/>실력 확인 문제 풀이<br/>포트폴리오 완성도 체크]
+    S --> K
+    T -->|완료| U[🎉 학습 완료!<br/>실무 적용 가능 수준 달성<br/>📊 자기점검 및 다음단계]
+    
+    U --> V[🚀 Next Step<br/>CSS Framework 학습<br/>Sass/SCSS 심화<br/>Modern CSS 탐구]
+    
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:3px
+    style B fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style F fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style J fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    style U fill:#c8e6c9,stroke:#4caf50,stroke-width:3px
+    style V fill:#fff8e1,stroke:#ffa000,stroke-width:2px
+    style N fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    style Q fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    style T fill:#ffebee,stroke:#d32f2f,stroke-width:2px
